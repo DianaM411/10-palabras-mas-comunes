@@ -13,10 +13,8 @@ public class Main {
         Scanner sc = null;
         try {
             //el archivo que queremos leer
-            String rutaRelativa = "Documentos\\frases.txt";
             String pwd = System.getProperty("user.dir");//ruta directorio actual de trabajo
-            String rutaAbsoluta = pwd + File.separator + rutaRelativa;
-            File archivo = new File(rutaAbsoluta);
+            File archivo = new File(pwd + File.separator + "Documentos" + File.separator + "frases.txt");
             sc = new Scanner(archivo);
             //declaramos variables
             int palabras = 0;
@@ -33,21 +31,19 @@ public class Main {
                 caracteres += line.length();//contamos caracteres (nr de caracteres es la longitud de la linea)
                 String saltador = " .,;\"\n\r\t"; //Las palabras van separadas por carácteres en blanco, comas, puntos, punto y coma, salto de línea y tabuladores.
                 palabras += new StringTokenizer(line, saltador).countTokens();//contamos palabras
-
-                StringTokenizer linea = new StringTokenizer(sc.nextLine(), saltador);
+            }
+              /*  StringTokenizer linea = new StringTokenizer(sc.nextLine(), saltador);
 
                 for (; linea.hasMoreTokens(); ) {
-
                     p = linea.nextToken();
-
                     if (!letras.containsKey(p)) {
                         letras.put(p, 1);
-
                     } else {
                         letras.put(p, letras.get(p) + 1);
                     }
                 }
             }
+
 
             SortedMap map = new TreeMap(java.util.Collections.reverseOrder());
             map.putAll(letras);
@@ -61,7 +57,7 @@ public class Main {
                 Object key = iterator.next();
                 System.out.println("Clave : " + key + " Valor :" + map.get(key));
                 i++;
-            }
+            }*/
 
             //imprimimos numero de lineas, palabras y caracteres
             System.out.println(" ");
