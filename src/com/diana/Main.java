@@ -20,9 +20,8 @@ public class Main {
             int palabras = 0;
             int lineas = 0;
             int caracteres = 0;
-            String p;
-            //Creamos un objeto de tipo HashMap
-            Map<String, Integer> letras = new HashMap<String, Integer>();
+            //donde almacenamos top 10 palabras
+            LinkedHashMap<String, Integer> wordcount = new LinkedHashMap<String, Integer>();
 
 
             while (sc.hasNextLine()) {//mientras hay mas lineas del archivo para leer
@@ -31,39 +30,55 @@ public class Main {
                 caracteres += line.length();//contamos caracteres (nr de caracteres es la longitud de la linea)
                 String saltador = " .,;\"\n\r\t"; //Las palabras van separadas por carácteres en blanco, comas, puntos, punto y coma, salto de línea y tabuladores.
                 palabras += new StringTokenizer(line, saltador).countTokens();//contamos palabras
-            }
-              /*  StringTokenizer linea = new StringTokenizer(sc.nextLine(), saltador);
 
-                for (; linea.hasMoreTokens(); ) {
-                    p = linea.nextToken();
-                    if (!letras.containsKey(p)) {
-                        letras.put(p, 1);
-                    } else {
-                        letras.put(p, letras.get(p) + 1);
+                line = line.toLowerCase(); // convert to lower case
+                String[] words = line.split("\\s+"); //split the line on whitespace, would return an array of words
+ñ
+                for (String word : words) {
+                    if (word.length() == 0) {
+                        continue;
                     }
+
+                    Integer occurences = wordcount.get(word);
+
+                    if (occurences == null) {
+                        occurences = 1;
+                    } else {
+                        occurences++;
+                    }
+
+                    wordcount.put(word, occurences);
                 }
+
             }
-
-
-            SortedMap map = new TreeMap(java.util.Collections.reverseOrder());
-            map.putAll(letras);
-            // Lee el TreeMap y te muestra los resultados en orden Descendente
-            Iterator iterator = map.keySet().iterator();
-            int i =1;
-            System.out.println(" ");
-            System.out.println("las 10 palabras más comunes y cuántas veces aparecen: ");
-            System.out.println(" ");
-            while (i <= 10) {
-                Object key = iterator.next();
-                System.out.println("Clave : " + key + " Valor :" + map.get(key));
-                i++;
-            }*/
 
             //imprimimos numero de lineas, palabras y caracteres
             System.out.println(" ");
             System.out.println("Numero de lineas: " + lineas);
             System.out.println("Numero de palabras: " + palabras);
             System.out.println("Numero de caracteres: " + caracteres);
+            System.out.println("Top 10 palabras: ");
+
+            ArrayList<Integer> values = new ArrayList<Integer>();
+            values.addAll(wordcount.values());
+
+            Collections.sort(values, Collections.reverseOrder());
+
+            int last_i = -1;
+
+
+            for (Integer i : values.subList(0, 9)) {
+                if (last_i == i) // without duplicates
+                    continue;
+                last_i = i;
+
+
+                for (String s : wordcount.keySet()) {
+
+                    if (wordcount.get(s) == i) // which have this value
+                        System.out.println(s + " " + i);
+                }
+            }
 
         } catch (Exception e) {  //manejamos excepciones
             e.printStackTrace();
